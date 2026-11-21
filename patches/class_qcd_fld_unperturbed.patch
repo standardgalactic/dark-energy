@@ -1,0 +1,60 @@
+diff --git a/include/background.h b/include/background.h
+index b01dbd5..4096991 100644
+--- a/include/background.h
++++ b/include/background.h
+@@ -110,6 +110,7 @@ struct background
+   short use_ppf; /**< flag switching on PPF perturbation equations instead of true fluid equations for perturbations. It could have been defined inside
+                     perturbation structure, but we leave it here in such way to have all fld parameters grouped. */
+   double c_gamma_over_c_fld; /**< ppf parameter defined in eq. (16) of 0808.3125 [astro-ph] */
++  short fld_unperturbed; /**< experimental: if _TRUE_, the fluid contributes to the background only (delta_rho, rho_plus_p_theta and delta_p of the fluid are set to zero in the Einstein equations). Used to quantify the effect of omitting dark-energy perturbations. */
+   enum equation_of_state fluid_equation_of_state; /**< parametrisation scheme for fluid equation of state */
+   double w0_fld;   /**< \f$ w0_{DE} \f$: current fluid equation of state parameter */
+   double wa_fld;   /**< \f$ wa_{DE} \f$: fluid equation of state parameter derivative */
+diff --git a/source/input.c b/source/input.c
+index f354479..ca493de 100644
+--- a/source/input.c
++++ b/source/input.c
+@@ -3312,6 +3312,17 @@ int input_read_parameters_species(struct file_content * pfc,
+       }
+     }
+ 
++    /* Experimental switch: background-only fluid (no perturbations) */
++    class_call(parser_read_string(pfc,"fld_unperturbed",&string1,&flag1,errmsg),
++               errmsg,
++               errmsg);
++    if (flag1 == _TRUE_){
++      if (string_begins_with(string1,'y') || string_begins_with(string1,'Y'))
++        pba->fld_unperturbed = _TRUE_;
++      else
++        pba->fld_unperturbed = _FALSE_;
++    }
++
+     /** 8.a.2) Equation of state */
+     /* Read */
+     class_call(parser_read_string(pfc,"fluid_equation_of_state",&string1,&flag1,errmsg),
+@@ -5972,6 +5983,7 @@ int input_default_params(struct background *pba,
+   /** 8.a) Omega fluid */
+   /** 8.a.1) PPF approximation */
+   pba->use_ppf = _TRUE_;
++  pba->fld_unperturbed = _FALSE_;
+   pba->c_gamma_over_c_fld = 0.4;
+   /** 9.a.2) Equation of state */
+   pba->fluid_equation_of_state = CLP;
+diff --git a/source/perturbations.c b/source/perturbations.c
+index c78fe43..0f91ff3 100644
+--- a/source/perturbations.c
++++ b/source/perturbations.c
+@@ -7258,6 +7258,13 @@ int perturbations_total_stress_energy(
+         ppw->delta_p_fld = (rho_plus_p_theta_fld_prime+4*a_prime_over_a* ppw->rho_plus_p_theta_fld - (rho_fld+p_fld)*metric_euler)/k2;
+       }
+ 
++      /* experimental: background-only fluid, no perturbations of the fluid in the Einstein equations */
++      if (pba->fld_unperturbed == _TRUE_) {
++        ppw->delta_rho_fld = 0.;
++        ppw->rho_plus_p_theta_fld = 0.;
++        ppw->delta_p_fld = 0.;
++      }
++
+       ppw->delta_rho += ppw->delta_rho_fld;
+       ppw->rho_plus_p_theta += ppw->rho_plus_p_theta_fld;
+       ppw->delta_p += ppw->delta_p_fld;

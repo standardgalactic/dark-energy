@@ -1,0 +1,14 @@
+{
+  "model": "lcdm",
+  "chi2_total": 1645.3206876116092,
+  "minus2_log_posterior": 1635.7308991322143,
+  "best_fit": {
+    "H0": 68.62991955621612,
+    "omega_b": 0.02218015083966062,
+    "omega_cdm": 0.12121574273361446
+  },
+  "chi2_by_likelihood": {
+    "bao.desi_dr2.desi_bao_all": 11.251924989354237,
+    "sn.desdovekie": 1634.068762622255
+  }
+}

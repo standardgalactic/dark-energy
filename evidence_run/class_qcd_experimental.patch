@@ -1,0 +1,278 @@
+diff --git a/include/background.h b/include/background.h
+index b01dbd5..6d63ada 100644
+--- a/include/background.h
++++ b/include/background.h
+@@ -12,11 +12,11 @@
+ 
+ /** list of possible parametrisations of the DE equation of state */
+ 
+-enum equation_of_state {CLP,EDE};
++enum equation_of_state {CLP,EDE,TAB};
+ 
+ /** list of possible parametrisations of the QCD vacuum dark energy switch function */
+ 
+-enum switch_qcd {EXP, TANH};
++enum switch_qcd {EXP, TANH, LNA};
+ 
+ /** list of possible parametrizations of the varying fundamental constants */
+ 
+@@ -110,6 +110,13 @@ struct background
+   short use_ppf; /**< flag switching on PPF perturbation equations instead of true fluid equations for perturbations. It could have been defined inside
+                     perturbation structure, but we leave it here in such way to have all fld parameters grouped. */
+   double c_gamma_over_c_fld; /**< ppf parameter defined in eq. (16) of 0808.3125 [astro-ph] */
++  FileName fld_table_file; /**< experimental: for fluid_equation_of_state=TAB, file with columns ln a, w, dw/dln a */
++  int fld_tab_n;
++  double * fld_tab_lna;
++  double * fld_tab_w;
++  double * fld_tab_dw;
++
++  short fld_unperturbed; /**< experimental: if _TRUE_, the fluid contributes to the background only (delta_rho, rho_plus_p_theta and delta_p of the fluid are set to zero in the Einstein equations). Used to quantify the effect of omitting dark-energy perturbations. */
+   enum equation_of_state fluid_equation_of_state; /**< parametrisation scheme for fluid equation of state */
+   double w0_fld;   /**< \f$ w0_{DE} \f$: current fluid equation of state parameter */
+   double wa_fld;   /**< \f$ wa_{DE} \f$: fluid equation of state parameter derivative */
+@@ -125,6 +132,8 @@ struct background
+   //Adding input parameters required for QCD vacuum dark energy
+   double z_qcd;            /**< \f$ z_{q} \f$: QCD vacuum dark energy switch function position parameter */
+   double Dz_qcd;           /**< \f$ \Delta z_{q} \f$: QCD vacuum dark energy switch function width parameter */
++  double lna_qcd;          /**< experimental 'lna' switch: position ln(a_q) of the logistic in ln a */
++  double Dlna_qcd;         /**< experimental 'lna' switch: width of the logistic in ln a */
+   double A_qcd;            /**< \f$ A_{q} \f$: QCD vacuum dark energy switch function normalisation term */
+   double H_qcd;            /**< \f$ \bar{H} \f$: Hubble parameter in de Sitter */
+   enum switch_qcd switch_function_qcd; /**< parametrisation scheme for QCD vacuum dark energy switch function */
+diff --git a/source/background.c b/source/background.c
+index 4f179ec..b5245af 100644
+--- a/source/background.c
++++ b/source/background.c
+@@ -687,6 +687,13 @@ int background_beta_qcd(
+   double z;
+   double beta;
+   z = 1./a-1.;
++  if (pba->switch_function_qcd == LNA) {
++    /* logistic in ln a: beta = 1/(1+exp(-(ln a - lna_qcd)/Dlna_qcd)); returns a*dbeta/dlna (= beta(1-beta)/Dlna * a) */
++    beta = 1./(1.+exp(-(log(a)-pba->lna_qcd)/pba->Dlna_qcd));
++    *beta_qcd = beta;
++    *adbeta_dloga_qcd = a*beta*(1.-beta)/pba->Dlna_qcd;
++    return _SUCCESS_;
++  }
+   if (pba->Dz_qcd == 0.) {
+     // step function
+     if (z < pba->z_qcd) {
+@@ -729,6 +736,21 @@ int background_beta_qcd(
+  * @return the error status
+  */
+ 
++
++/** experimental: cubic Hermite interpolation of the tabulated w(ln a); constant outside the table */
++static void background_tab_interp(struct background * pba, double lna, double * w, double * dw) {
++  int lo = 0, hi = pba->fld_tab_n-1, mid;
++  double x0, x1, hh, t, h00, h10, h01, h11;
++  if (lna <= pba->fld_tab_lna[0]) { *w = pba->fld_tab_w[0]; *dw = 0.; return; }
++  if (lna >= pba->fld_tab_lna[hi]) { *w = pba->fld_tab_w[hi]; *dw = 0.; return; }
++  while (hi-lo > 1) { mid = (lo+hi)/2; if (pba->fld_tab_lna[mid] > lna) hi = mid; else lo = mid; }
++  x0 = pba->fld_tab_lna[lo]; x1 = pba->fld_tab_lna[hi]; hh = x1-x0; t = (lna-x0)/hh;
++  h00 = (1.+2.*t)*(1.-t)*(1.-t); h10 = t*(1.-t)*(1.-t); h01 = t*t*(3.-2.*t); h11 = t*t*(t-1.);
++  *w = h00*pba->fld_tab_w[lo] + h10*hh*pba->fld_tab_dw[lo] + h01*pba->fld_tab_w[hi] + h11*hh*pba->fld_tab_dw[hi];
++  *dw = (6.*t*t-6.*t)/hh*pba->fld_tab_w[lo] + (3.*t*t-4.*t+1.)*pba->fld_tab_dw[lo]
++      + (-6.*t*t+6.*t)/hh*pba->fld_tab_w[hi] + (3.*t*t-2.*t)*pba->fld_tab_dw[hi];
++}
++
+ int background_w_fld(
+                      struct background * pba,
+                      double a,
+@@ -747,6 +769,15 @@ int background_w_fld(
+   case CLP:
+     *w_fld = pba->w0_fld + pba->wa_fld * (1. - a);
+     break;
++  case TAB:
++    {
++      double lna = (a > 0.) ? log(a) : pba->fld_tab_lna[0];
++      double w_, dw_;
++      background_tab_interp(pba, lna, &w_, &dw_);
++      *w_fld = w_;
++      *dw_over_da_fld = (a > 0.) ? dw_/a : 0.;
++    }
++    break;
+   case EDE:
+     // Omega_ede(a) taken from eq. (10) in 1706.00730
+     Omega_ede = (pba->Omega0_fld - pba->Omega_EDE*(1.-pow(a,-3.*pba->w0_fld)))
+@@ -782,6 +813,8 @@ int background_w_fld(
+   case CLP:
+     *dw_over_da_fld = - pba->wa_fld;
+     break;
++  case TAB:
++    break;
+   case EDE:
+     d2Omega_ede_over_da2 = 0.;
+     *dw_over_da_fld = - d2Omega_ede_over_da2*a/3./(1.-Omega_ede)/Omega_ede
+@@ -805,6 +838,24 @@ int background_w_fld(
+   case CLP:
+     *integral_fld = 3.*((1.+pba->w0_fld+pba->wa_fld)*log(1./a) + pba->wa_fld*(a-1.));
+     break;
++  case TAB:
++    {
++      /* 3 * int_{ln a}^{0} (1+w) dln a', trapezoid, 4000 steps */
++      int k, nk = 4000;
++      double lna0 = (a > 0.) ? log(a) : pba->fld_tab_lna[0];
++      double dl, s = 0., w1, w2, d_;
++      if (lna0 < 0.) {
++        dl = (0.-lna0)/nk;
++        background_tab_interp(pba, lna0, &w1, &d_);
++        for (k=1; k<=nk; k++) {
++          background_tab_interp(pba, lna0+k*dl, &w2, &d_);
++          s += 0.5*(2.+w1+w2)*dl;
++          w1 = w2;
++        }
++      }
++      *integral_fld = 3.*s;
++    }
++    break;
+   case EDE:
+     class_stop(pba->error_message,"EDE implementation not finished: to finish it, read the comments in background.c just before this line\n");
+     break;
+@@ -1865,14 +1916,22 @@ int background_checks(
+   /* QCD vacuum dark energy */
+   if (pba->has_qcd == _TRUE_) {
+ 
+-    class_test(pba->z_qcd < 0.,
+-               pba->error_message,
+-               "z_qcd=%g is less than zero, the switch function will not tend to 1 in the future.\n",
+-               pba->z_qcd);
+-    class_test(pba->Dz_qcd <0.,
+-               pba->error_message,
+-               "Dz_qcd=%g is less than zero, the switch function will not tend to 1 in the future.\n",
+-               pba->Dz_qcd);
++    if (pba->switch_function_qcd != LNA) {
++      class_test(pba->z_qcd < 0.,
++                 pba->error_message,
++                 "z_qcd=%g is less than zero, the switch function will not tend to 1 in the future.\n",
++                 pba->z_qcd);
++      class_test(pba->Dz_qcd <0.,
++                 pba->error_message,
++                 "Dz_qcd=%g is less than zero, the switch function will not tend to 1 in the future.\n",
++                 pba->Dz_qcd);
++    }
++    else {
++      class_test(pba->Dlna_qcd <= 0.,
++                 pba->error_message,
++                 "Dlna_qcd=%g must be positive.\n",
++                 pba->Dlna_qcd);
++    }
+   }
+ 
+   /* Varying fundamental constants */
+diff --git a/source/input.c b/source/input.c
+index f354479..cf5d736 100644
+--- a/source/input.c
++++ b/source/input.c
+@@ -3312,6 +3312,17 @@ int input_read_parameters_species(struct file_content * pfc,
+       }
+     }
+ 
++    /* Experimental switch: background-only fluid (no perturbations) */
++    class_call(parser_read_string(pfc,"fld_unperturbed",&string1,&flag1,errmsg),
++               errmsg,
++               errmsg);
++    if (flag1 == _TRUE_){
++      if (string_begins_with(string1,'y') || string_begins_with(string1,'Y'))
++        pba->fld_unperturbed = _TRUE_;
++      else
++        pba->fld_unperturbed = _FALSE_;
++    }
++
+     /** 8.a.2) Equation of state */
+     /* Read */
+     class_call(parser_read_string(pfc,"fluid_equation_of_state",&string1,&flag1,errmsg),
+@@ -3325,6 +3336,9 @@ int input_read_parameters_species(struct file_content * pfc,
+       else if ((strstr(string1,"EDE") != NULL) || (strstr(string1,"ede") != NULL)) {
+         pba->fluid_equation_of_state = EDE;
+       }
++      else if ((strstr(string1,"TAB") != NULL) || (strstr(string1,"tab") != NULL)) {
++        pba->fluid_equation_of_state = TAB;
++      }
+       else {
+         class_stop(errmsg,"incomprehensible input '%s' for the field 'fluid_equation_of_state'",string1);
+       }
+@@ -3337,6 +3351,27 @@ int input_read_parameters_species(struct file_content * pfc,
+       class_read_double("wa_fld",pba->wa_fld);
+       class_read_double("cs2_fld",pba->cs2_fld);
+     }
++    if (pba->fluid_equation_of_state == TAB) {
++      /* experimental tabulated w(a): columns ln a, w, dw/dln a, increasing in ln a */
++      FILE * ftab;
++      int nmax = 100000, n = 0;
++      double x, y, dy;
++      class_read_double("cs2_fld",pba->cs2_fld);
++      class_call(parser_read_string(pfc,"fld_table_file",&string1,&flag1,errmsg),errmsg,errmsg);
++      class_test(flag1 == _FALSE_, errmsg, "fluid_equation_of_state=TAB requires fld_table_file");
++      strcpy(pba->fld_table_file,string1);
++      ftab = fopen(pba->fld_table_file,"r");
++      class_test(ftab == NULL, errmsg, "cannot open fld_table_file %s", pba->fld_table_file);
++      pba->fld_tab_lna = (double*)malloc(nmax*sizeof(double));
++      pba->fld_tab_w = (double*)malloc(nmax*sizeof(double));
++      pba->fld_tab_dw = (double*)malloc(nmax*sizeof(double));
++      while (n < nmax && fscanf(ftab,"%lf %lf %lf",&x,&y,&dy) == 3) {
++        pba->fld_tab_lna[n] = x; pba->fld_tab_w[n] = y; pba->fld_tab_dw[n] = dy; n++;
++      }
++      fclose(ftab);
++      class_test(n < 4, errmsg, "fld_table_file has too few rows");
++      pba->fld_tab_n = n;
++    }
+     if (pba->fluid_equation_of_state == EDE) {
+       /** 8.a.2.3) Equation of state of the fluid in 'EDE' case */
+       /* Read */
+@@ -3407,6 +3442,8 @@ int input_read_parameters_species(struct file_content * pfc,
+   if (pba->Omega0_qcd != 0.) {
+     class_read_double("z_qcd", pba->z_qcd);
+     class_read_double("Dz_qcd", pba->Dz_qcd);
++    class_read_double("lna_qcd", pba->lna_qcd);
++    class_read_double("Dlna_qcd", pba->Dlna_qcd);
+     //printf("Omega0_qcd=%f, \n",pba->Omega0_qcd);
+     class_call(parser_read_double(pfc,"H_qcd",&param1,&flag1,errmsg),errmsg,errmsg);
+     if (flag1 == _TRUE_) {
+@@ -3429,6 +3466,11 @@ int input_read_parameters_species(struct file_content * pfc,
+         pba->switch_function_qcd = EXP;
+         pba->A_qcd = 1.+exp(-(1.+pba->z_qcd)/pba->Dz_qcd);
+       }
++      else if ((strstr(string1,"LNA") != NULL) || (strstr(string1,"lna") != NULL)) {
++        /* experimental: beta = 1/(1+exp(-(ln a - lna_qcd)/Dlna_qcd)), tends to 1 as a -> infinity */
++        pba->switch_function_qcd = LNA;
++        pba->A_qcd = 1.;
++      }
+       else {
+         class_stop(errmsg,"incomprehensible input '%s' for the field 'switch_function_qcd'",string1);
+       }
+@@ -5972,6 +6014,7 @@ int input_default_params(struct background *pba,
+   /** 8.a) Omega fluid */
+   /** 8.a.1) PPF approximation */
+   pba->use_ppf = _TRUE_;
++  pba->fld_unperturbed = _FALSE_;
+   pba->c_gamma_over_c_fld = 0.4;
+   /** 9.a.2) Equation of state */
+   pba->fluid_equation_of_state = CLP;
+@@ -5996,6 +6039,8 @@ int input_default_params(struct background *pba,
+   pba->A_qcd = 1.;
+   pba->z_qcd = 1.;
+   pba->Dz_qcd = 1.;
++  pba->lna_qcd = -0.7;
++  pba->Dlna_qcd = 0.3;
+   pba->H_qcd = 50*1.e3/_c_;
+   pba->switch_function_qcd = TANH;
+ 
+diff --git a/source/perturbations.c b/source/perturbations.c
+index c78fe43..0f91ff3 100644
+--- a/source/perturbations.c
++++ b/source/perturbations.c
+@@ -7258,6 +7258,13 @@ int perturbations_total_stress_energy(
+         ppw->delta_p_fld = (rho_plus_p_theta_fld_prime+4*a_prime_over_a* ppw->rho_plus_p_theta_fld - (rho_fld+p_fld)*metric_euler)/k2;
+       }
+ 
++      /* experimental: background-only fluid, no perturbations of the fluid in the Einstein equations */
++      if (pba->fld_unperturbed == _TRUE_) {
++        ppw->delta_rho_fld = 0.;
++        ppw->rho_plus_p_theta_fld = 0.;
++        ppw->delta_p_fld = 0.;
++      }
++
+       ppw->delta_rho += ppw->delta_rho_fld;
+       ppw->rho_plus_p_theta += ppw->rho_plus_p_theta_fld;
+       ppw->delta_p += ppw->delta_p_fld;

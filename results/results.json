@@ -1,0 +1,263 @@
+{
+  "settings": {
+    "out": "/home/claude/out",
+    "sig_dm": 0.008,
+    "sig_dh": 0.018,
+    "sig_cmb": 0.0003,
+    "sig_sn": 0.02,
+    "skip_relax": false,
+    "checks_only": false
+  },
+  "reference": {
+    "h0": 67.74,
+    "om": 0.3109,
+    "zq": 0.68,
+    "dzq": 0.82
+  },
+  "published_checks": {
+    "A_q": 1.1288919931395105,
+    "beta_at_z_minus1": 1.0,
+    "beta0": 0.7859348222968635,
+    "Hbar_km_s_Mpc": 59.3859211010702,
+    "Hbar_note": "paper quotes 58.8 (+3.5/-4.3) at its own best-fit chain point",
+    "eq16_residual_max": 9.769962616701378e-15,
+    "closure_E_at_z0": 1.0,
+    "eq23_vs_a_dbeta_dlna_max_rel_err": 1.6971367550098913e-09,
+    "dbeta_dlna_with_(1+z)_max_rel_err": 1.6971366578788603e-09,
+    "eq23_expression_misread_as_dbeta_dlna_max_rel_err": 0.7499687465168378,
+    "eq20_vs_numeric_Hdot_max_rel_err_dbeta_dlna_with_(1+z)": 2.480730505999382e-09,
+    "eq20_vs_numeric_Hdot_max_rel_err_if_Eq23_misread_as_dbeta_dlna": 0.08366512826127699,
+    "eq14_identity_max_abs_err": 1.7763568394002505e-15,
+    "eps_H_at_z=0.00": 0.517032422689101,
+    "eq14_combination_at_z=0.00": 0.5897656492243669,
+    "H_over_Hbar_at_z=0.00": 1.1406744013402066,
+    "eps_H_at_z=0.30": 0.7716134676752632,
+    "eq14_combination_at_z=0.30": 1.0424649762913831,
+    "H_over_Hbar_at_z=0.30": 1.3510196749573957,
+    "eps_H_at_z=0.67": 0.9914280409690923,
+    "eq14_combination_at_z=0.67": 1.6714908658812246,
+    "H_over_Hbar_at_z=0.67": 1.6859426976136267,
+    "eps_H_at_z=1.00": 1.1291300508919448,
+    "eq14_combination_at_z=1.00": 2.305321233407146,
+    "H_over_Hbar_at_z=1.00": 2.0416791064820927,
+    "eps_H_at_z=2.00": 1.37108269809778,
+    "eq14_combination_at_z=2.00": 4.664019623831926,
+    "H_over_Hbar_at_z=2.00": 3.4017055501485935,
+    "w_eff_analytic_vs_numeric_max_abs_err": 5.399232172464963e-10,
+    "phantom_crossing_z_correct": 0.6414498342430429,
+    "phantom_crossing_z_if_Eq23_misread_as_dbeta_dlna": null,
+    "w_eff_max_abs_difference_literal_vs_correct_z<=2": 0.6775427000203832,
+    "w0_correct": -0.9511517160408944,
+    "w0_if_Eq23_misread": -0.9511517160408944,
+    "class_qcd_form_H_prime_vs_numeric_max_rel_err": 2.4807305001720582e-09
+  },
+  "mimicry_fits": {
+    "lcdm": {
+      "chi2_min": 14.90260506356325,
+      "h0_best": 67.60655704736249,
+      "params": {},
+      "n_shape_params": 0,
+      "seconds": 0.1,
+      "DE_fraction_vs_z": {
+        "z=0": 0.6877800163677803,
+        "z=1": 0.2158573160145488,
+        "z=3": 0.03324629575713604,
+        "z=10": 0.0016474963796245527,
+        "z=100": 2.0772346146678996e-06,
+        "z=1089.9": 1.2861998602791867e-09
+      },
+      "phantom_crossing_z": 0.003787878787878788
+    },
+    "unsupp": {
+      "chi2_min": 3335.52415492399,
+      "h0_best": 60.000000000001606,
+      "params": {},
+      "n_shape_params": 0,
+      "seconds": 0.2,
+      "DE_fraction_vs_z": {
+        "z=0": 0.6035980019889102,
+        "z=1": 0.28630427590537577,
+        "z=3": 0.11282462454314297,
+        "z=10": 0.025897512585045482,
+        "z=100": 0.0009305217314740222,
+        "z=1089.9": 2.316512483339366e-05
+      },
+      "phantom_crossing_z": null
+    },
+    "qcd_z": {
+      "chi2_min": 0.0,
+      "h0_best": 67.74,
+      "params": {
+        "zq": 0.680000000000001,
+        "dzq": 0.8199999999999994
+      },
+      "n_shape_params": 2,
+      "seconds": 3.0,
+      "DE_fraction_vs_z": {
+        "z=0": 0.68900890681289,
+        "z=1": 0.22319224700105592,
+        "z=3": 0.012288433408226962,
+        "z=10": 5.626779456673584e-07,
+        "z=100": -1.7649393789129832e-16,
+        "z=1089.9": -1.1190558226024807e-16
+      },
+      "phantom_crossing_z": 0.6414428364393335
+    },
+    "qcd_a": {
+      "chi2_min": 3.8974616613664645,
+      "h0_best": 67.39934442693796,
+      "params": {
+        "aq": 0.48861070531519657,
+        "daq": 0.15198814960858995
+      },
+      "n_shape_params": 2,
+      "seconds": 0.8,
+      "DE_fraction_vs_z": {
+        "z=0": 0.68585728634379,
+        "z=1": 0.2067583530063584,
+        "z=3": 0.026874178224559293,
+        "z=10": 0.002355998295717926,
+        "z=100": 5.0531735987891184e-05,
+        "z=1089.9": 1.188063943980485e-06
+      },
+      "phantom_crossing_z": 0.3412246464994101
+    },
+    "qcd_lna": {
+      "chi2_min": 0.45194651744625,
+      "h0_best": 67.62751944584957,
+      "params": {
+        "lnaq": -0.7002531818596354,
+        "dlnq": 0.32544207956260907
+      },
+      "n_shape_params": 2,
+      "seconds": 0.9,
+      "DE_fraction_vs_z": {
+        "z=0": 0.6879735430685372,
+        "z=1": 0.2173292477258546,
+        "z=3": 0.018434653763437107,
+        "z=10": 0.00020308191041420803,
+        "z=100": 7.96532253516357e-09,
+        "z=1089.9": 1.3205656151233744e-13
+      },
+      "phantom_crossing_z": 0.5024002947237942
+    },
+    "switch_noH": {
+      "chi2_min": 9.435391824898517,
+      "h0_best": 68.20832355742789,
+      "params": {
+        "zq": 2.7164542905030746,
+        "dzq": 0.2149460469584689
+      },
+      "n_shape_params": 2,
+      "seconds": 0.8,
+      "DE_fraction_vs_z": {
+        "z=0": 0.6932648229399908,
+        "z=1": 0.2201754622660509,
+        "z=3": 0.00738847903230042,
+        "z=10": 1.3882519978159445e-16,
+        "z=100": -1.7894277145452592e-16,
+        "z=1089.9": -1.1345825964410362e-16
+      },
+      "phantom_crossing_z": null
+    },
+    "switch_noH_a": {
+      "chi2_min": 9.335386791380607,
+      "h0_best": 68.19616287073481,
+      "params": {
+        "aq": 0.26427763899763973,
+        "daq": 0.02764806668872644
+      },
+      "n_shape_params": 2,
+      "seconds": 0.8,
+      "DE_fraction_vs_z": {
+        "z=0": 0.693155419630358,
+        "z=1": 0.2201109727537388,
+        "z=3": 0.013007074725524334,
+        "z=10": 3.194311254866985e-06,
+        "z=100": 2.150948070002008e-10,
+        "z=1089.9": 9.629171804751855e-14
+      },
+      "phantom_crossing_z": null
+    },
+    "switch_noH_lna": {
+      "chi2_min": 9.380554985571715,
+      "h0_best": 68.20235730541722,
+      "params": {
+        "lnaq": -1.3230147790242264,
+        "dlnq": 0.07839591979831038
+      },
+      "n_shape_params": 2,
+      "seconds": 0.9,
+      "DE_fraction_vs_z": {
+        "z=0": 0.6932111550175093,
+        "z=1": 0.22013437453614407,
+        "z=3": 0.010764845251522893,
+        "z=10": 1.879310940156155e-09,
+        "z=100": 0.0,
+        "z=1089.9": -1.1343841189154332e-16
+      },
+      "phantom_crossing_z": null
+    },
+    "cpl": {
+      "chi2_min": 1.9733324423814205,
+      "h0_best": 67.49772214384163,
+      "params": {
+        "w0": -0.8763822292349169,
+        "wa": -0.4637848941687139
+      },
+      "n_shape_params": 2,
+      "seconds": 1.0,
+      "DE_fraction_vs_z": {
+        "z=0": 0.6867723430378767,
+        "z=1": 0.21309958296951811,
+        "z=3": 0.02306986038699207,
+        "z=10": 0.0005033478577219906,
+        "z=100": 7.384353247748072e-08,
+        "z=1089.9": 4.082387383772079e-12
+      },
+      "phantom_crossing_z": 0.3634192458154473
+    },
+    "relax": {
+      "chi2_min": 11.719223229879606,
+      "h0_best": 67.47694427541533,
+      "params": {
+        "tau_times_H0": 5.631968097125155
+      },
+      "n_shape_params": 1,
+      "seconds": 4.9,
+      "DE_fraction_vs_z": {
+        "z=0": 0.68657941180094,
+        "z=1": 0.3160898567944925,
+        "z=3": 0.06651811883652683,
+        "z=10": 0.0034102333777032553,
+        "z=100": 3.0171957290685247e-06,
+        "z=1089.9": 9.019263953350078e-10
+      },
+      "phantom_crossing_z": 0.615117099944283
+    }
+  },
+  "calibration": {
+    "proxy_expected_delta_chi2_of_reference_vs_lcdm": 14.90260506356325,
+    "published_delta_chi2_CMBSPA_DD_DESI": -11.21,
+    "note": "If these differ by a large factor, the proxy error model has different information content from the real likelihoods; scale chi2 values accordingly."
+  },
+  "relax_initial_condition_sensitivity": {
+    "zero_initial_R": {
+      "z=0": 0.686579411803826,
+      "z=1": 0.21664489498534859,
+      "z=3": 0.03203329813180981,
+      "z=10": 0.0014069415610756723,
+      "z=100": 1.2023358015585647e-06,
+      "z=1089.9": 3.5901584480112657e-10
+    },
+    "tracking_initial_R": {
+      "z=0": 0.6865769301087856,
+      "z=1": 0.23163504243644542,
+      "z=3": 0.037905338264395384,
+      "z=10": 0.0019259251595044888,
+      "z=100": 2.4425267277154493e-06,
+      "z=1089.9": 1.5126818042185202e-09
+    },
+    "note": "DE fraction rho_DE/rho_total; the relaxation model suppresses early DE only through its initial condition, which is an added assumption."
+  }
+}

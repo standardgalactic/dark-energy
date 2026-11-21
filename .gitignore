@@ -1,0 +1,51 @@
+# Third-party source trees and installed scientific dependencies
+/class_qcd/
+/cobaya_packages/
+
+# Sampling outputs and reproducible heavy intermediates
+/evidence_run/chains/
+/evidence_run/**/chains/
+/evidence_run/**/*_polychord_raw/
+/evidence_run/**/*_clusters/
+*.resume
+*.locked
+
+# Python and compiled binaries
+__pycache__/
+*.py[cod]
+*.so
+*.a
+*.o
+*.opp
+*.mod
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# LaTeX build products (retain finished PDFs)
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+
+# Editor and system files
+.DS_Store
+*~
+*.swp
+*.swo
+
+# Local inventory, superseded top-level README
+/file-list.txt
+/README.txt

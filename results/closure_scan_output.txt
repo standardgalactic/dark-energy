@@ -1,0 +1,13 @@
+Closure scan: perturbed minus background-only fluid with the exact w(z)
+case                  TT/cv    EE max%    phiphi%  P(k) k>0.01     sigma8 %
+tab_pert (cs2=1,      0.123       1.03       1.52     2.12e-02         1.06
+scan_cs2_1e-2         0.092       0.78       0.87     2.09e-02         1.05
+scan_cs2_1e-1         0.106       0.86       1.31     2.12e-02         1.06
+scan_cg_0.2           0.116       0.94       1.43     2.12e-02         1.06
+scan_cg_0.8           0.124       1.06       1.55     2.12e-02         1.06
+
+Full CLASS range (z = 0 to 1.0e+14):
+  max |dH/H| = 1.74e-07
+  max |difference in Omega_DE(z)| = 1.26e-07
+  max |d rho_DE / rho_DE| = 1.04e+16 for z where the QCD-DE density exceeds 1e-30 of critical (z < 53)
+  max |d rho_DE / rho_DE| for z < 15 = 5.04e-07

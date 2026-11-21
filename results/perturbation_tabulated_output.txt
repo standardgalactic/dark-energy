@@ -1,0 +1,29 @@
+w(z) from rho vs p/rho column, max |diff| for z<5: 3.92e-10
+  z=0.0  w=-0.951
+  z=0.5  w=-0.971
+  z=1.0  w=-1.108
+  z=2.0  w=-1.559
+  z=3.0  w=-2.048
+ln[rho_DE(z=30)/rho_DE(0)] with the blended table: -21.0; exact: -30.8
+H(z) from tabulated w vs QCD-DE background: max |dH/H| for z<30 = 1.49e-08
+Omega_DE(z=0) = 0.689018
+
+Background check: tabulated fluid, unperturbed, against the QCD-DE run (should vanish)
+  TT      max |dC/C| = 7.76e-04;  worst l = 2477 (0.04 of cosmic variance);  sum (dC/C / cv)^2 = 0.1
+  EE      max |dC/C| = 1.23e-03;  worst l = 2470 (0.04 of cosmic variance);  sum (dC/C / cv)^2 = 0.3
+  phiphi  max |dC/C| = 7.88e-05;  worst l = 600 (0.00 of cosmic variance);  sum (dC/C / cv)^2 = 0.0
+
+Perturbation effect for the exact QCD w(z) (tabulated fluid)
+  TT      max |dC/C| = 5.53e-02;  worst l = 6 (0.12 of cosmic variance);  sum (dC/C / cv)^2 = 0.4
+  EE      max |dC/C| = 1.03e-02;  worst l = 2417 (0.05 of cosmic variance);  sum (dC/C / cv)^2 = 0.9
+  phiphi  max |dC/C| = 1.52e-02;  worst l = 2500 (0.14 of cosmic variance);  sum (dC/C / cv)^2 = 31.4
+
+Perturbation effect for the CPL fit (w0 = -0.869, wa = -0.489)
+  TT      max |dC/C| = 5.14e-02;  worst l = 5 (0.10 of cosmic variance);  sum (dC/C / cv)^2 = 0.2
+  EE      max |dC/C| = 6.27e-03;  worst l = 2415 (0.03 of cosmic variance);  sum (dC/C / cv)^2 = 0.3
+  phiphi  max |dC/C| = 9.51e-03;  worst l = 2500 (0.08 of cosmic variance);  sum (dC/C / cv)^2 = 9.9
+
+Matter power spectrum
+  background check: P(k) change for k>0.01 = -3.25e-07 on average; implied sigma8 shift -0.00 percent
+  exact w(z): P(k) change for k>0.01 = +2.12e-02 on average; implied sigma8 shift +1.06 percent
+  CPL fit: P(k) change for k>0.01 = +1.49e-02 on average; implied sigma8 shift +0.74 percent

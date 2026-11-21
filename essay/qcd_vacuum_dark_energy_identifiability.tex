@@ -1,0 +1,223 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1.15in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{setspace}
+\setstretch{1.08}
+\hypersetup{colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black}
+
+\newcommand{\Hb}{\bar H}
+\newcommand{\LQCD}{\Lambda_{\rm QCD}}
+
+\title{Identifiability and Perturbation Closure in a QCD Vacuum Dark Energy Model}
+\author{Flyxion\\Independent Researcher}
+\date{November 20, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Lee, van de Bruck, Di Valentino, Van Waerbeke and Zhitnitsky (2026) propose that the evolving dark energy favoured by DESI is a vacuum response of the QCD topological sectors, with energy density $\rho_{\rm DE}=c_H\LQCD^3 H\,\beta(z)$, where the factor $H$ and the de Sitter limit come from the QCD scale and the whole interpolation in redshift is carried by a two-parameter logistic function $\beta(z)$ described as phenomenological. This essay asks what the data can and cannot say about that construction. A numerical check confirms that the published background equations are mutually consistent and that the modified Boltzmann code uses them correctly. The adiabatic condition that motivates the response, however, is of order unity or larger at every redshift where BAO and supernova data constrain the model. DESI DR2 with DES-Dovekie reaches an identical chi-square with the QCD form and with a two-parameter CPL fluid, so the reported improvement over $\Lambda$CDM is a property of the data and not of either model. A mimicry test treats the published model as noiseless data and shows that a response linear in $H$ with a different transition variable, and CPL without any factor of $H$, reproduce the observables to within a fraction of the forecast uncertainty. Dark energy enters the authors' code through the background only, and restoring a fluid with the exact equation of state shifts the matter clustering amplitude by about one percent for the closure assumed, and a scan over the sound speed and the PPF parameter gives the envelope within which that statement holds. The reported log evidence of about two over $\Lambda$CDM is compatible with the Occam factor of the prior box, and whether the difference from CPL survives defensible changes of prior measure and an independent estimator has not been established. A matched-prior recomputation is prepared and not yet run. The conclusion separates two open questions. The expansion history does not discriminate the linear dependence on $H$ or the logistic transition from other smooth histories at the precision considered, and the vacuum response has no derived perturbation theory whose predictions are known to preserve the claimed observational preference.
+\end{abstract}
+
+\vspace{1.5em}
+\noindent\textbf{Keywords:} evolving dark energy, QCD vacuum, topological sectors, DESI, model identifiability, Bayesian evidence, dark energy perturbations
+
+\newpage
+
+\section{Introduction}
+
+The DESI baryon acoustic oscillation measurements, combined with supernova compilations and the cosmic microwave background, have been read as preferring a dark-energy density that varies with time and crosses the phantom divide \cite{DESI2025}. Most responses to this preference adopt a parametrization of the equation of state, of which the CPL form \cite{CP2001,Linder2003} is the standard, and report the improvement in fit over a cosmological constant. A different line of work asks whether a physical mechanism could supply a density of the required behaviour without a free function. Van Waerbeke and Zhitnitsky \cite{VWZ2025} argue that the topological sectors of the QCD vacuum \cite{Zh2015,Zh2014} contribute an energy density that tracks the Hubble rate in a de Sitter background, and Lee et al.\ \cite{Lee2026} develop this into a complete background model that they fit to CMB, BAO and supernova data. The central claim of the title is that the evolving dark energy is vacuum energy after all.
+
+The claim has two parts that need to be separated. The first is that a model with the stated density law fits the data as well as the best phenomenological alternatives. The second is that the data favour the physical content of that law, namely the linear dependence on $H$ and its link to the QCD scale, over other ways of obtaining a similar expansion history. The first is a statement about fit, and the reproduction below confirms it. The second is a statement about identification, and it is the one that would make the model a physical result and not a fitted function. This essay examines the second statement with independent calculations on the published model, using the authors' own code where possible.
+
+The structure follows the logic of the model. Section~2 sets out the construction and checks it numerically. Section~3 examines the adiabatic condition that motivates the vacuum response and the transition function introduced to enforce it. Section~4 reproduces the late-time fit and shows that the data saturate. Section~5 reports the mimicry test. Section~6 treats the Bayesian model comparison. Section~7 concerns the dark-energy perturbations that the authors' code omits. Section~8 collects the smaller points and states what analyses would settle the open questions.
+
+\section{The Background Construction}
+
+The model replaces the dark-energy component by a density proportional to the Hubble rate. With $\rho_t$ the sum of matter, radiation and neutrino densities, the Friedmann equation becomes
+\begin{equation}
+H^2=\frac{8\pi G}{3}\,\rho_t+\Hb\,\beta(z)\,H,\qquad \Hb=\frac{8\pi G}{3}\,c_H\,\LQCD^3,
+\end{equation}
+which is quadratic in $H$ and has the closed-form solution
+\begin{equation}
+H=\tfrac12\Hb\beta+\sqrt{\left(\tfrac12\Hb\beta\right)^2+\tfrac{8\pi G}{3}\rho_t}.
+\end{equation}
+The transition function is the logistic $\beta(z)=A_q/\left[1+e^{(z-z_q)/\Delta z_q}\right]$ with $A_q=1+e^{-(1+z_q)/\Delta z_q}$ fixed by the requirement $\beta=1$ in the far future, where the response should reach its de Sitter value. Flatness at $z=0$ closes the budget and fixes $\Hb=H_0\Omega_{\rm DE}/\beta(0)$, so the QCD scale enters only through a consistency requirement on $c_H$, in the same way that flatness fixes the cosmological constant in $\Lambda$CDM.
+
+The published expressions for $H$ and its derivative were checked numerically. The quadratic is satisfied to machine precision, and the authors' expression for $\dot H$ agrees with a finite-difference derivative to two parts in $10^{9}$. The authors' Eq.~23 is written for the combination $a\,d\beta/d\ln a$. For a logistic in $z$ the derivative $d\beta/d\ln a$ carries a factor of $1+z$, and the factor $a$ cancels it, so the expression is correct as written. The modified CLASS code uses exactly this combination in the conformal-time derivative of $H$, and the Python reconstruction of the background used in this essay agrees with the code to the printed precision in $\Hb$ and $H(z{=}1)$.
+
+At the published best fit for CMB-SPA with DES-Dovekie and DESI, $z_q=0.68$, $\Delta z_q=0.82$, $H_0=67.74$ and $\Omega_m=0.311$, one finds $\beta(0)=0.786$ and $\Hb=59.4$ km\,s$^{-1}$Mpc$^{-1}$, which reproduces the value of 58.8 quoted for the authors' own chain point within the posterior width. The effective phantom crossing of the reconstructed equation of state falls at $z\simeq0.64$, close to the reported 0.67. The amplitude is not predicted, however. Matching $\Hb$ requires $c_H\simeq0.022$ for $\LQCD=100$ MeV and $c_H\simeq0.005$ for 170 MeV, against the authors' order-of-magnitude estimate of 0.01 to 0.02, and the paper quotes both values of the scale in different places. A factor of five in $c_H$ is large enough that the agreement should be described as one of order of magnitude.
+
+\section{The Validity Condition and the Transition Function}
+
+The linear response is justified only near de Sitter expansion. The authors express this as an adiabatic condition, $\tfrac32 (H/\Hb)\,|1+w_{\rm tot}|\ll 1$, and introduce $\beta(z)$ to suppress the response wherever the condition fails. This is a physical reason to expect suppression, but it does not determine how large the suppression is, where it sets in, or how fast it switches on. The two forms of the criterion are related by an exact identity. With $\epsilon_H\equiv|\dot H/H^2|=\tfrac32|1+w_{\rm tot}|$,
+\begin{equation}
+\tfrac32\,\frac{H}{\Hb}\,|1+w_{\rm tot}|=\frac{H}{\Hb}\,\epsilon_H,
+\end{equation}
+so the second criterion differs from the first only by the factor $H/\Hb$, which exceeds unity at every redshift of observational interest.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{cccc}
+\toprule
+$z$ & $H/\Hb$ & $\epsilon_H$ & $(H/\Hb)\,\epsilon_H$\\
+\midrule
+0 & 1.14 & 0.52 & 0.59\\
+0.3 & 1.35 & 0.77 & 1.04\\
+0.67 & 1.69 & 0.99 & 1.67\\
+1 & 2.04 & 1.13 & 2.31\\
+2 & 3.40 & 1.37 & 4.66\\
+\bottomrule
+\end{tabular}
+\caption{The adiabatic criterion evaluated on the published best-fit expansion history. The motivating approximation requires the last column to be much smaller than unity.}
+\end{table}
+
+Table~1 shows that the condition is not small today and is of order unity or larger from $z\simeq0.3$ outward, including at the transition redshift $z_q=0.68$. The criterion becomes increasingly well satisfied toward the asymptotic de Sitter limit, as $H$ approaches $\Hb$, but that limit does not justify the fitted response over the observational redshift interval, and a small expansion parameter is in any case a necessary condition and not a demonstration that the effective description is controlled. Where the model is compared with BAO and supernova data it is an interpolating function whose behaviour is set by two fitted numbers. That the function does the work is confirmed by removing it. With $\beta$ fixed at one the model has no transition parameters but is excluded by a wide margin (a chi-square of order 3000 in the forecast of Section~5), because an unsuppressed term linear in $H$ contributes a dark-energy fraction that grows toward early times. A derivation of $\beta$ from the adiabatic condition itself, as a function of $H/\Hb$ and $w_{\rm tot}$ and not of redshift, would convert the central phenomenological ingredient into a prediction, and it is the most constructive extension available. One defence of the fitted form should be acknowledged. The suppression might reduce the physical importance of the term exactly where the underlying approximation fails, in which case a large expansion parameter would not by itself invalidate the fit. Evaluating that defence requires an error estimate for the response itself and not only for the expansion parameter, and the logistic is not derived from such an estimate.
+
+\section{Saturation of the Late-Time Data}
+
+The late-time fit was reproduced with the authors' modified CLASS driven through Cobaya \cite{Cobaya2021,CLASS2011}, with DESI DR2 BAO \cite{DESI2025} and DES-Dovekie supernovae, a Gaussian BBN prior on the baryon density, and free cold dark matter density and $H_0$. Perturbation parameters were held fixed because only background quantities enter. Table~2 gives the minimum chi-square for each model.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{llcc}
+\toprule
+Model & Free dark-energy parameters & Best-fit $\chi^2$ & Change from $\Lambda$CDM\\
+\midrule
+$\Lambda$CDM & none & 1645.32 & 0\\
+CPL & $w_0=-0.84$, $w_a=-0.53$ & 1638.12 & $-7.20$\\
+QCD-DE (logistic in $z$) & $z_q=0.80$, $\Delta z_q=0.52$ & 1638.12 & $-7.20$\\
+\bottomrule
+\end{tabular}
+\caption{Late-time fits to DESI DR2 BAO and DES-Dovekie supernovae.}
+\end{table}
+
+The improvement of 7.20 over $\Lambda$CDM matches the 7.19 reported for both models in the authors' DD+DESI row. Two different two-parameter families landing on the same value is consistent with both having reached a common minimum for smooth expansion histories on these two datasets, although two families cannot establish that this is a general floor, and a free-form reconstruction of $H(z)$ would test it directly. On that reading the improvement measures how far the data sit from $\Lambda$CDM and does not by itself indicate which functional form is preferred. The QCD best-fit transition, $(0.80,\,0.52)$, differs from the joint fit with the CMB, $(0.68,\,0.82)$, as expected when the CMB is not available to fix the matter density. Any evidence for the QCD form over alternatives must therefore come from the combinations that include the CMB, where the paper reports a log evidence ratio of about two.
+
+\section{The Mimicry Test}
+
+If the factor $H$ is a physical feature identified by the data, other response functions should fail to reproduce the observables that the published model produces. This was tested by treating the published model at its best fit as noiseless data and refitting each alternative with the physical matter density held fixed, so that early-time physics is unchanged and only the late-time expansion can adjust. The observables were the BAO transverse and radial distances $D_M/r_d$ and $D_H/r_d$ at the seven DESI redshifts, the CMB acoustic angle, and forty binned supernova distance moduli with a free offset, with assumed fractional errors of 0.8 percent on $D_M$, 1.8 percent on $D_H$, 0.03 percent on the acoustic angle and 0.02 mag per bin. The error model is calibrated by the fact that $\Lambda$CDM fitted to the published model gives a chi-square of 14.9, against a published improvement of 11.2 for the real data. A minimum chi-square below about one indicates that the alternative cannot be distinguished from the published model.
+
+The test can be stated precisely. Let $\mathcal O:\Theta\to\mathbb R^n$ be the map from the parameters of a model family to the observable vector, and let $C$ be the covariance of that vector. For two families with parameter spaces $\Theta_1$ and $\Theta_2$, the quantity of interest is the covariance-weighted discrepancy between their observable images,
+\begin{equation}
+d_C^2(\theta,\phi)=\left[\mathcal O(\theta)-\mathcal O(\phi)\right]^{\top}C^{-1}\left[\mathcal O(\theta)-\mathcal O(\phi)\right],\qquad D_C^2=\min_{\phi\in\Theta_2}d_C^2(\theta_\star,\phi),
+\end{equation}
+where $\theta_\star$ is the published best fit. The entries of Table~3 are values of $D_C^2$ for the stated family and for the forecast covariance described above. This establishes practical non-identifiability: at that precision the alternative families reproduce the published observables. It does not establish structural non-identifiability, which would require $D_C^2=0$ for every covariance. The nonzero entries for CPL (1.97) and for the logistic in $a$ (3.90) show that the families are distinct, and a sufficiently small $C$ would separate them. The forecast covariance used here is also not the covariance of Section~4, where the actual data enter, and the conclusion drawn from Table~3 is that the present data have not been shown to be capable of discrimination, not that none could be.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{p{9cm}cc}
+\toprule
+Alternative & Shape parameters & Minimum $\chi^2$\\
+\midrule
+Published form, logistic in $z$ (self-check) & 2 & 0.00\\
+Linear in $H$, logistic in $\ln a$ & 2 & 0.45\\
+CPL (no factor of $H$) & 2 & 1.97\\
+Linear in $H$, logistic in $a$ & 2 & 3.90\\
+Monotone switch-on without factor of $H$, any of three variables & 2 & 9.3 to 9.4\\
+Causal relaxation, single timescale & 1 & 11.7\\
+$\Lambda$CDM & 0 & 14.9\\
+Linear in $H$ with no suppression & 0 & 3336\\
+\bottomrule
+\end{tabular}
+\caption{Mimicry of the published model by alternative response functions, with the physical matter density fixed.}
+\end{table}
+
+The result in Table~3 is that the form linear in $H$ with a different transition variable mimics the published model almost exactly, and CPL, which has no factor of $H$, nearly does. The monotone switch-on models without the factor fail, but for a structural reason. A dark-energy density that is switched on monotonically never decreases with the scale factor, so its equation of state cannot exceed $-1$, whereas the published model has $w\simeq-0.95$ today. The factor $H$ supplies the declining part, and CPL, which has no such restriction, is therefore the fair $H$-free comparison. The causal relaxation model replaces the instantaneous dependence on $H$ by a response variable obeying $\tau\,\dot R+R=H$, with $H$ as its equilibrium value. Its early-time behaviour is demonstrated and not imposed, since the dark-energy fraction at recombination is about $10^{-9}$ for both initial conditions tried, zero and tracking. It fits poorly, however, and a single timescale does not replace the fitted transition. The background data therefore cannot be said to select the logistic in redshift, the linear dependence on $H$, or the QCD interpretation.
+
+\section{Model Comparison}
+
+The reported log evidence of about 2.0 for QCD-DE against $\Lambda$CDM, and 1.02 for CPL, is moderate, and a substantial part of it is attributable to the Occam factor of the prior box. Both models add two parameters, but equal parameter counts do not give equal Bayesian complexity. The QCD transition parameters carry uniform priors on $(0,3)$ in both $z_q$ and $\Delta z_q$, and the reported posterior ($z_q\simeq0.68$, $\Delta z_q\simeq0.82$) occupies roughly 1.5 percent of that box. This fraction is an order-of-magnitude figure. A reproducible definition would be the product of the marginal credible widths divided by the prior area, or a covariance-determinant estimate, or an integrated likelihood volume from the chain, and these differ when the posterior is correlated or non-Gaussian, so the figure should be recomputed from the chains once they are available. The corresponding Occam penalty is $\ln 0.015\simeq-4.2$ in the log evidence. A likelihood improvement of 5.6 in log likelihood, corresponding to the reported chi-square change of 11.2, then predicts a log evidence ratio near 1.4, close to the reported 2.0, whereas CPL reaches an equal or better chi-square (12.85) with a prior-volume penalty of its own that depends on the ranges chosen for $w_0$ and $w_a$. These figures are rough, since posterior shape and correlations also enter, but they indicate that the difference in evidence between the two models is of the size that changing the prior box would produce. An Occam factor is an intrinsic part of Bayesian evidence and not an artifact, so the relevant question is not whether it is present but whether the difference between QCD-DE and CPL survives defensible changes of prior measure and an independent evidence estimate.
+
+The evidence estimator adds a second uncertainty. The paper uses a learned harmonic-mean estimator with normalizing flows \cite{McEwen2021} and acknowledges that the result depends on the flow, and a preference of order unity is within the range that such estimators can shift. The table of model-comparison statistics also contains internal inconsistencies. For a two-parameter extension, the change in AIC should equal the change in chi-square plus four when both come from the same fits. This holds in the PP+DESI and DD+DESI rows. In the CMB rows it does not: for CMB-SPA+PP+DESI, QCD-DE lists a chi-square change of $-10.84$ and an AIC change of $-3.49$, where the identity gives $-6.84$, and for CMB-SPA+DD+DESI it lists $-11.21$ and $-5.15$, where the identity gives $-7.21$. One plausible explanation is that chi-square comes from maximum-posterior points and AIC from independently optimized maximum-likelihood points, but the table does not say so. The CMB-only row, where the AIC change is $+4.48$, disfavours QCD-DE, which conflicts with the statement that all criteria point the same way.
+
+A recomputation under matched, explicitly justified priors is prepared as a set of Cobaya configurations for $\Lambda$CDM, CPL, the published form, and the same linear-in-$H$ law with a logistic in $\ln a$, each at two prior widths, to be sampled with PolyChord \cite{PolyChord2015} so that the evidence carries an independent error bar. If the posterior lies inside both boxes, the log evidence should rise by exactly the log volume ratio when the box is narrowed, and the extraction script reports that check directly. The results of that run are not yet available, and the conclusion of this section is limited to the analytic argument above: the reported preference is compatible with the Occam factor of the prior box, and its robustness to the prior and the estimator has not been established. The matched-prior run is essential to any stronger statement about the comparison.
+
+\section{Perturbations and Covariance}
+
+Dark energy enters the authors' code only through the background. In the modified CLASS the QCD component appears in the background module alone: it sets the expansion rate and an effective pressure obtained as the total minus the matter and radiation parts, and it has no perturbed density, velocity or stress in the perturbation module. The paper describes the mechanism as a purely background effect and gives no perturbation equations. For a component whose density evolves and whose density plus pressure does not vanish, a prescription with no perturbations does not in general satisfy the conservation equations that the Einstein constraints require, so the choice is an assumption and not a consequence of the model.
+
+The size of the omission was estimated in two steps. A CPL fluid was first fitted to the QCD dark-energy density ($w_0=-0.869$, $w_a=-0.489$, with the expansion rate matched to within 0.56 percent for $z\le3$). The same background was then run twice, once with full PPF perturbations \cite{HuSawicki2007,FangHuLewis2008} and once with the fluid restricted to the background by a switch added to the authors' code, so that the difference isolates the omitted perturbations. The CPL fit has $w\simeq-1.2$ at $z=2$ and $z=3$, whereas the equation of state of the QCD component is $-1.56$ and $-2.05$ there, so the CPL result cannot be taken as a bound, and the response is not guaranteed to be monotonic in the departure of $w$ from $-1$. The calculation was therefore repeated with the exact $w(z)$ of the QCD component, tabulated from the authors' background and supplied to CLASS as a fluid that reproduces their expansion rate to $10^{-8}$ for $z<30$. Beyond that redshift the exact density falls below any representable number, so $w$ was blended smoothly to $-1$ between $z=15$ and $z=30$, which freezes a density that is already below $10^{-9}$ of the total. Over the complete CLASS integration range the tabulated fluid and the QCD component differ in $H$ by at most $1.7\times10^{-7}$ and in $\Omega_{\rm DE}$ by at most $1.3\times10^{-7}$. The fractional difference in $\rho_{\rm DE}$ itself is below $5\times10^{-7}$ for $z<15$ but grows through the blended region and reaches order unity in the frozen region, where the density is negligible, so the agreement is one of the expansion rate and the dark-energy fraction and not of the density at every redshift. With the unperturbed tabulated fluid the spectra of the QCD run are recovered to 0.04 of cosmic variance.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lcc}
+\toprule
+Quantity & Exact $w(z)$ & CPL fit\\
+\midrule
+TT, largest change & 5.5\% (multipole 6) & 5.1\% (multipole 5)\\
+EE, largest change & 1.0\% & 0.6\%\\
+Lensing potential, largest change & 1.5\% & 1.0\%\\
+$P(k)$ for $k>0.01\,h$/Mpc & $+2.1$\% & $+1.5$\%\\
+Implied shift in $\sigma_8$ & $+1.1$\% & $+0.74$\%\\
+\bottomrule
+\end{tabular}
+\caption{Effect of the omitted dark-energy perturbations, with PPF perturbations and unit sound speed, relative to the background-only fluid on the same expansion history.}
+\end{table}
+
+The temperature change is below 0.12 of cosmic variance at every multipole, and the polarization change is below 0.05 of cosmic variance as well. The matter clustering shift is the quantity that matters. A shift of about 1.1 percent in $\sigma_8$ is roughly one and a half times the quoted uncertainty on $\sigma_8=0.809\pm0.0056$. It must be interpreted with care. The experiment does not show that the model's predicted $\sigma_8$ is wrong by that amount. It shows that one admissible phenomenological completion of the background produces a difference of that size, and a background expansion history does not determine its perturbations, since the effective sound speed, the anisotropic stress, interactions and any additional degrees of freedom can change the clustering history while leaving $H(z)$ untouched.
+
+The dependence on the closure was therefore scanned within the PPF family. Reducing the sound speed squared from one to $10^{-1}$ and to $10^{-2}$, and moving the PPF transition parameter $c_\Gamma/c_{\rm fld}$ between 0.2 and 0.8, leaves the matter power change at $+2.1$ percent for $k>0.01\,h$/Mpc and the implied $\sigma_8$ shift between 1.05 and 1.06 percent in every case. The largest temperature change stays between 0.09 and 0.12 of cosmic variance, and the largest polarization and lensing changes lie between 0.8 and 1.1 percent and between 0.9 and 1.6 percent. The clustering shift is therefore insensitive to these two choices, which indicates that it is driven mainly by the absence of the perturbed component and not by the detail of the closure. The scan does not reach anisotropic stress, interactions between the vacuum response and matter, or additional degrees of freedom, and it cannot speak to a perturbation theory derived from the vacuum dynamics, whose clustering could differ from every member of this family. What the calculation supports is that the robustness of the reported $\sigma_8$ and $S_8$ constraints to physically admissible closures has not been established, and that for the closures tried the omission is not negligible.
+
+The covariant status of the density law also needs to be stated. A term linear in $H$ changes sign between expansion and contraction, so it is defined only relative to a chosen timelike congruence, with $H$ replaced by one third of its expansion scalar, and a causal completion has to say what that congruence is and how the term responds when it is perturbed. Whether a preferred frame is implied is a further question that the appearance of $H$ alone does not settle. The authors' own statement that no covariant action is given leaves this open, and it is the point at which a derivation from the topological vacuum, as opposed to a background matching, would have to enter.
+
+\section{Smaller Points and Requested Analyses}
+
+Several smaller points should be addressed in a revision. The QCD scale is quoted as about 170 MeV in the introduction and about 100 MeV in the model section, which changes the implied $c_H$ by a factor of five. The lower bound of the uniform prior on the transition width is zero, where the logistic is undefined. The statement that all information criteria agree is contradicted by the CMB-only row. The phantom branch, which arises at redshifts above about 0.64 from the activation of $\beta$, is not analysed for stability in the paper, which defers that question to earlier work.
+
+Five analyses would most strengthen the paper. The first is an ablation of the factor $H$ under matched priors and a common evidence estimator, replacing the linear dependence by a constant and by other powers while keeping the same transition family, so that the data are shown to prefer the physical feature the title asserts. The second is a derivation, or at least a self-consistent closure, of $\beta$ as a function of the adiabatic parameters, in place of a free logistic in redshift. The third is an explicit perturbation prescription, covariant and causal, with the CMB and clustering results recomputed under it. The fourth is a corrected model-comparison table in which the estimators behind each column are identified. The fifth is a recomputed evidence with an independent sampler and a stated error, at more than one prior width. None of these requires new data, and together they would separate what the observations establish about the expansion history from what the QCD interpretation adds to it.
+
+\section{Conclusion}
+
+The background model of Lee et al.\ is internally consistent and fits the late-time data as well as any smooth two-parameter alternative tested here. Those facts are established by the reproduction in Sections~2 and~4. A successful background fit leaves two logically independent questions open, and the results above bear on them separately.
+
+The first is mechanistic identification: whether the observations discriminate a response linear in $H$, with the QCD scale as its amplitude, from other effective histories. At the precision considered the answer is that they do not. The adiabatic condition fails where the data have weight, the transition that repairs it is fitted and not derived, and a response without any factor of $H$ reproduces the same observables to within the forecast error. This is practical and not structural non-identifiability, and the nonzero discrepancies of Table~3 show where sharper data could separate the families. Even if future observations did single out this particular expansion history, that would not by itself demonstrate its QCD origin.
+
+The second is dynamical completion: whether the vacuum response admits a consistent, causal perturbation theory whose predictions preserve the claimed observational preference. The authors' code supplies none, and an exact-equation-of-state fluid with the closures scanned here moves $\sigma_8$ by about one percent, so the robustness of the clustering constraints to admissible closures has not been established. Conversely, deriving a covariant vacuum response would not guarantee that its perturbations fit the data. The reported evidence preference is compatible with the Occam factor of the prior box, and its survival under defensible prior changes and an independent estimator is the one result that the prepared PolyChord run will decide. The most direct way forward is a transition function derived from $H/\Hb$ and $w_{\rm tot}$, together with a perturbation sector for the vacuum response, and the available background evidence does not by itself identify the proposed mechanism.
+
+\begin{thebibliography}{99}
+
+\bibitem{Lee2026}
+D.~H. Lee, C.~van de Bruck, E.~Di Valentino, L.~Van Waerbeke and A.~Zhitnitsky, Evolving Dark Energy Is Vacuum Energy After All, arXiv:2606.20036 (2026).
+
+\bibitem{VWZ2025}
+L.~Van Waerbeke and A.~Zhitnitsky, DESI Results and Dark Energy from QCD Topological Sectors, arXiv:2506.14182 (2025).
+
+\bibitem{Zh2015}
+A.~R. Zhitnitsky, Phys.\ Rev.\ D \textbf{92}, 043512 (2015), doi:10.1103/PhysRevD.92.043512.
+
+\bibitem{Zh2014}
+A.~R. Zhitnitsky, The Topological Long Range Order in QCD, Applications to Heavy Ion Collisions and Cosmology, arXiv:1411.2606.
+
+\bibitem{DESI2025}
+DESI Collaboration, DESI DR2 Results II: Measurements of Baryon Acoustic Oscillations and Cosmological Constraints, arXiv:2503.14738 (2025).
+
+\bibitem{CP2001}
+M. Chevallier and D. Polarski, Accelerating Universes with Scaling Dark Matter, Int.\ J.\ Mod.\ Phys.\ D \textbf{10}, 213 (2001).
+
+\bibitem{Linder2003}
+E.~V. Linder, Exploring the Expansion History of the Universe, Phys.\ Rev.\ Lett.\ \textbf{90}, 091301 (2003).
+
+\bibitem{CLASS2011}
+D.~Blas, J.~Lesgourgues and T.~Tram, The Cosmic Linear Anisotropy Solving System (CLASS) II: Approximation Schemes, J.\ Cosmol.\ Astropart.\ Phys.\ 07 (2011) 034.
+
+\bibitem{Cobaya2021}
+J.~Torrado and A.~Lewis, Cobaya: Code for Bayesian Analysis of Hierarchical Physical Models, J.\ Cosmol.\ Astropart.\ Phys.\ 05 (2021) 057.
+
+\bibitem{PolyChord2015}
+W.~J. Handley, M.~P. Hobson and A.~N. Lasenby, PolyChord: Next-Generation Nested Sampling, Mon.\ Not.\ R.\ Astron.\ Soc.\ \textbf{453}, 4384 (2015).
+
+\bibitem{McEwen2021}
+J.~D. McEwen, C.~G.~R. Wallis, M.~A. Price and A.~S.~M. Docherty, Machine Learning Assisted Bayesian Model Comparison: Learnt Harmonic Mean Estimator, arXiv:2111.12720 (2021).
+
+\bibitem{HuSawicki2007}
+W. Hu and I. Sawicki, Parametrized Post-Friedmann Framework for Modified Gravity, Phys.\ Rev.\ D \textbf{76}, 104043 (2007).
+
+\bibitem{FangHuLewis2008}
+W. Fang, W. Hu and A. Lewis, Crossing the Phantom Divide with Parametrized Post-Friedmann Dark Energy, Phys.\ Rev.\ D \textbf{78}, 087303 (2008).
+
+\end{thebibliography}
+
+\end{document}

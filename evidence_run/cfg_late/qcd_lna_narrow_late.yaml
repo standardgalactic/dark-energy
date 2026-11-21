@@ -1,0 +1,71 @@
+theory:
+  classy:
+    extra_args:
+      N_ur: 2.0328
+      N_ncdm: 1
+      m_ncdm: 0.06
+      T_ncdm: 0.71611
+      Omega_fld: 0
+      Omega_scf: 0
+      Omega_Lambda: 0
+      Omega_qcd: -1
+      switch_function_qcd: lna
+      output: ''
+likelihood:
+  bao.desi_dr2.desi_bao_all: null
+  sn.desdovekie: null
+params:
+  omega_b:
+    prior:
+      dist: norm
+      loc: 0.02218
+      scale: 0.00055
+    ref: 0.02218
+    proposal: 0.0005
+    latex: \Omega_\mathrm{b} h^2
+  omega_cdm:
+    prior:
+      min: 0.09
+      max: 0.15
+    ref:
+      dist: norm
+      loc: 0.12
+      scale: 0.002
+    proposal: 0.001
+    latex: \Omega_\mathrm{c} h^2
+  H0:
+    prior:
+      min: 55
+      max: 80
+    ref:
+      dist: norm
+      loc: 67.5
+      scale: 1.0
+    proposal: 0.5
+    latex: H_0
+  A_s: 2.1e-09
+  n_s: 0.9649
+  tau_reio: 0.051
+  lna_qcd:
+    prior:
+      min: -1.5
+      max: 0.0
+    ref: -0.7
+    proposal: 0.05
+    latex: lna_qcd
+  Dlna_qcd:
+    prior:
+      min: 0.1
+      max: 1.0
+    ref: 0.33
+    proposal: 0.05
+    latex: Dlna_qcd
+sampler:
+  polychord:
+    nlive: 125
+    num_repeats: 25
+    precision_criterion: 0.001
+    do_clustering: true
+packages_path: /home/bonobo/new/cobaya_packages
+output: chains/qcd_lna_narrow_late
+force: true
