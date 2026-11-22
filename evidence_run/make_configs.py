@@ -107,14 +107,14 @@ def build(model, width, args):
         extra.pop("non linear", None)
         extra["output"] = ""
     else:
-        extra.update({"output": "tCl pCl lCl", "lensing": "yes", "l_max_scalars": 5000})
+        extra.update({"output": "tCl pCl lCl", "lensing": "yes", "l_max_scalars": args.lmax})
     n_dim = sum(1 for v in params.values() if isinstance(v, dict) and "prior" in v)
     info = {
         "theory": {"classy": {"extra_args": extra}},
         "likelihood": likelihoods(args.data, args.sn, args.cmb_extra_yaml),
         "params": params,
         "sampler": {"polychord": {"nlive": args.nlive_per_dim * n_dim,
-                                  "num_repeats": 5 * n_dim, "precision_criterion": 0.001,
+                                  "num_repeats": args.repeats_per_dim * n_dim, "precision_criterion": 0.001,
                                   "do_clustering": True}},
         "packages_path": args.packages_path,
         "output": "chains/%s_%s_%s" % (model, width, args.data),
@@ -130,6 +130,8 @@ def main():
     ap.add_argument("--cmb-extra-yaml", default=None)
     ap.add_argument("--packages-path", default="/path/to/cobaya_packages")
     ap.add_argument("--nlive-per-dim", type=int, default=25)
+    ap.add_argument("--repeats-per-dim", type=int, default=5)
+    ap.add_argument("--lmax", type=int, default=5000, help="l_max_scalars for CMB runs; 2600 suffices for Planck-only and is about twice as fast")
     args = ap.parse_args()
     os.makedirs(args.outdir, exist_ok=True)
     written = []

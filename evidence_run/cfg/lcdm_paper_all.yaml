@@ -90,4 +90,3 @@ sampler:
     do_clustering: true
 packages_path: /home/bonobo/new/cobaya_packages
 output: chains/lcdm_paper_all
-force: true

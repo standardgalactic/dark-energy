@@ -110,4 +110,3 @@ sampler:
     do_clustering: true
 packages_path: /home/bonobo/new/cobaya_packages
 output: chains/cpl_narrow_all
-force: true
