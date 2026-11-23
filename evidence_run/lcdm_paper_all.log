@@ -1,0 +1,312 @@
+[0 : output] Output to be read-from/written-into folder 'chains', with prefix 'lcdm_paper_all'
+[0 : classy] `classy` module loaded successfully from /home/bonobo/.local/lib/python3.12/site-packages/classy
+[1 : bao.desi_dr2.desi_bao_all] Initialized.
+[3 : bao.desi_dr2.desi_bao_all] Initialized.
+[0 : bao.desi_dr2.desi_bao_all] Initialized.
+[2 : bao.desi_dr2.desi_bao_all] Initialized.
+[5 : bao.desi_dr2.desi_bao_all] Initialized.
+[4 : bao.desi_dr2.desi_bao_all] Initialized.
+[0 : polychord] `pypolychord` module loaded successfully from /home/bonobo/new/cobaya_packages/code/PolyChordLite/build/lib.linux-x86_64-cpython-312/pypolychord
+[0 : polychord] Storing raw PolyChord output in 'chains/lcdm_paper_all_polychord_raw'.
+[0 : model] Measuring speeds... (this may take a few seconds)
+[0 : model] Setting measured speeds (per sec): {bao.desi_dr2.desi_bao_all: 465.0, sn.desdovekie: 76.5, planck_2018_lowl.TT: 526.0, planck_2018_lowl.EE: 3410.0, planck_2018_highl_plik.TTTEEE_lite_native: 445.0, planck_2018_lensing.native: 1480.0, classy: 0.11}
+[0 : polychord] Parameter blocks and their oversampling factors:
+[0 : polychord] *  1 : ['omega_b', 'omega_cdm', 'H0', 'logA', 'n_s', 'tau_reio']
+[0 : polychord] * 18 : ['A_planck']
+[0 : prior] *WARNING* There are unbounded parameters (['tau_reio', 'A_planck']). Prior bounds are given at 0.9999995 confidence level. Beware of likelihood modes at the edge of the prior
+[0 : polychord] Calling PolyChord...
+PolyChord: MPI is already initilised, not initialising, and will not finalize
+PolyChord: MPI is already initilised, not initialising, and will not finalize
+PolyChord: MPI is already initilised, not initialising, and will not finalize
+PolyChord: MPI is already initilised, not initialising, and will not finalize
+PolyChord: MPI is already initilised, not initialising, and will not finalize
+PolyChord: MPI is already initilised, not initialising, and will not finalize
+
+PolyChord: Next Generation Nested Sampling
+copyright: Will Handley, Mike Hobson & Anthony Lasenby
+  version: 1.20.1
+  release: 1st June 2021
+    email: wh260@mrao.cam.ac.uk
+
+Run Settings
+nlive    :      60
+nDims    :       7
+nDerived :      11
+Doing Clustering
+Synchronous parallelisation
+Generating equally weighted posteriors
+Generating weighted posteriors
+Clustering on posteriors
+Writing a resume file to chains/lcdm_paper_all_polychord_raw/lcdm_paper_all.resume
+
+generating live points
+
+
+all live points generated
+
+number of repeats:           12         216
+started sampling
+
+________________
+lives      | 60 |
+phantoms   |227 |
+posteriors |545 |
+equals     |  1 |
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+ncluster   =       1 /       1
+ndead      =                 545
+nposterior =                 545
+nequals    =                   1
+nlike      =                 632                 334
+<nlike>    =           0.47           5.57   (           0.04           0.03 per slice )
+log(Z)     =        -5175.72 +/-  0.77
+log(Z_1)   =        -5175.72 +/-  0.77 (still evaluating)
+
+
+
+_________________
+lives      |  60 |
+phantoms   |8252 |
+posteriors | 606 |
+equals     |   1 |
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+ncluster   =       1 /       1
+ndead      =                 607
+nposterior =                 606
+nequals    =                   2
+nlike      =                2753               34531
+<nlike>    =          35.35         569.95   (           2.95           2.64 per slice )
+log(Z)     =        -3291.77 +/-  0.66
+log(Z_1)   =        -3291.77 +/-  0.66 (still evaluating)
+
+
+
+__________________
+lives      |   60 |
+phantoms   |12600 |
+posteriors |  667 |
+equals     |    1 |
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+ncluster   =       1 /       1
+ndead      =                 669
+nposterior =                 667
+nequals    =                   1
+nlike      =                4830               69882
+<nlike>    =          34.62         589.18   (           2.88           2.73 per slice )
+log(Z)     =        -2526.34 +/-  0.85
+log(Z_1)   =        -2526.34 +/-  0.85 (still evaluating)
+
+
+
+__________________
+lives      |   60 |
+phantoms   |13475 |
+posteriors |  728 |
+equals     |    1 |
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+ncluster   =       1 /       1
+ndead      =                 731
+nposterior =                 728
+nequals    =                   1
+nlike      =                7089              106564
+<nlike>    =          37.65         611.37   (           3.14           2.83 per slice )
+log(Z)     =        -2060.27 +/-  0.86
+log(Z_1)   =        -2060.27 +/-  0.86 (still evaluating)
+
+
+
+__________________
+lives      |   60 |
+phantoms   |12429 |
+posteriors |  789 |
+equals     |    2 |
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+ncluster   =       1 /       1
+ndead      =                 793
+nposterior =                 789
+nequals    =                   1
+nlike      =                9543              145758
+<nlike>    =          40.90         653.23   (           3.41           3.02 per slice )
+log(Z)     =        -1764.69 +/-  0.84
+log(Z_1)   =        -1764.69 +/-  0.84 (still evaluating)
+
+
+
+__________________
+lives      |   60 |
+phantoms   |13199 |
+posteriors |  850 |
+equals     |    1 |
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+ncluster   =       1 /       1
+ndead      =                 855
+nposterior =                 850
+nequals    =                   1
+nlike      =               12061              188377
+<nlike>    =          41.97         710.32   (           3.50           3.29 per slice )
+log(Z)     =        -1640.49 +/-  0.83
+log(Z_1)   =        -1640.49 +/-  0.83 (still evaluating)
+
+
+
+__________________
+lives      |   60 |
+phantoms   |12424 |
+posteriors |  911 |
+equals     |    3 |
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+ncluster   =       1 /       1
+ndead      =                 916
+nposterior =                 911
+nequals    =                   3
+nlike      =               14708              231960
+<nlike>    =          44.12         726.38   (           3.68           3.36 per slice )
+log(Z)     =        -1545.08 +/-  0.63
+log(Z_1)   =        -1545.08 +/-  0.63 (still evaluating)
+
+
+
+_________________________
+lives      |   54 |    6 |
+phantoms   |12520 | 1785 |
+posteriors |  969 |  915 |
+equals     |    2 |    1 |
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+ncluster   =       2 /       2
+ndead      =                 978
+nposterior =                 973
+nequals    =                   2
+nlike      =               18387              295954
+<nlike>    =          61.32        1066.57   (           5.11           4.94 per slice )
+log(Z)     =        -1486.79 +/-  0.65
+log(Z_1)   =        -1486.79 +/-  0.65 (still evaluating)
+log(Z_2)   =        -1511.13 +/-  0.84 (still evaluating)
+
+
+
+_________________________
+lives      |   50 |   10 |
+phantoms   |11006 | 2193 |
+posteriors | 1027 |  920 |
+equals     |    2 |    1 |
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+ncluster   =       2 /       2
+ndead      =                1044
+nposterior =                1036
+nequals    =                   3
+nlike      =               22093              359912
+<nlike>    =          61.77        1065.97   (           5.15           4.94 per slice )
+log(Z)     =        -1439.71 +/-  0.64
+log(Z_1)   =        -1439.72 +/-  0.64 (still evaluating)
+log(Z_2)   =        -1446.50 +/-  0.91 (still evaluating)
+
+
+
+_________________________
+lives      |   52 |    8 |
+phantoms   |11697 | 2425 |
+posteriors | 1080 |  929 |
+equals     |    3 |    1 |
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+ncluster   =       2 /       2
+ndead      =                1108
+nposterior =                1098
+nequals    =                   2
+nlike      =               25905              428616
+<nlike>    =          63.53        1145.07   (           5.29           5.30 per slice )
+log(Z)     =        -1411.33 +/-  0.73
+log(Z_1)   =        -1411.92 +/-  0.91 (still evaluating)
+log(Z_2)   =        -1412.44 +/-  0.82 (still evaluating)
+
+
+
+_________________________
+lives      |   49 |   11 |
+phantoms   |11834 | 3069 |
+posteriors | 1135 |  938 |
+equals     |    5 |    2 |
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+ncluster   =       2 /       2
+ndead      =                1176
+nposterior =                1162
+nequals    =                   3
+nlike      =               30736              517027
+<nlike>    =          80.52        1473.52   (           6.71           6.82 per slice )
+log(Z)     =        -1391.12 +/-  0.54
+log(Z_1)   =        -1391.59 +/-  0.56 (still evaluating)
+log(Z_2)   =        -1392.33 +/-  0.85 (still evaluating)
+
+
+
+_________________________
+lives      |   53 |    7 |
+phantoms   |10771 | 1839 |
+posteriors | 1185 |  949 |
+equals     |    4 |    1 |
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+ncluster   =       2 /       2
+ndead      =                1239
+nposterior =                1223
+nequals    =                   5
+nlike      =               35061              596691
+<nlike>    =          72.08        1327.73   (           6.01           6.15 per slice )
+log(Z)     =        -1377.88 +/-  0.56
+log(Z_1)   =        -1378.29 +/-  0.55 (still evaluating)
+log(Z_2)   =        -1379.24 +/-  0.93 (still evaluating)
+
+
+
+_________________________
+lives      |   56 |    4 |
+phantoms   |15565 | 1788 |
+posteriors | 1237 |  957 |
+equals     |   17 |    2 |
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+ncluster   =       2 /       2
+ndead      =                1300
+nposterior =                1283
+nequals    =                   8
+nlike      =               39159              672162
+<nlike>    =          68.30        1257.85   (           5.69           5.82 per slice )
+log(Z)     =        -1371.59 +/-  0.56
+log(Z_1)   =        -1372.17 +/-  0.49 (still evaluating)
+log(Z_2)   =        -1372.59 +/-  0.86 (still evaluating)
+
+
+
+_________________________
+lives      |   59 |    1 |
+phantoms   |12813 | 1062 |
+posteriors | 1294 |  961 |
+equals     |   10 |    2 |
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+ncluster   =       2 /       2
+ndead      =                1362
+nposterior =                1344
+nequals    =                   8
+nlike      =               42903              741687
+<nlike>    =          62.40        1158.75   (           5.20           5.36 per slice )
+log(Z)     =        -1365.73 +/-  0.51
+log(Z_1)   =        -1365.79 +/-  0.52 (still evaluating)
+log(Z_2)   =        -1369.09 +/-  0.96 (still evaluating)
+
+
+
+__________________
+lives      |   60 |
+phantoms   |12225 |
+posteriors | 1348 |
+equals     |   11 |
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+ncluster   =       1 /       2
+ndead      =                1423
+nposterior =                1400
+nequals    =                   2
+nlike      =               47539              827174
+<nlike>    =          77.27        1424.78   (           6.44           6.60 per slice )
+log(Z)     =        -1360.20 +/-  0.72
+log(Z_1)   =        -1360.64 +/-  0.52 (still evaluating)
+log(Z_2)   =        -1361.46 +/-  1.16
+
+
+

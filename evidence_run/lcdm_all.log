@@ -1,0 +1,66 @@
+nohup: ignoring input
+[0 : output] Output to be read-from/written-into folder 'chains', with prefix 'lcdm_paper_all'
+[0 : output] Found existing info files with the requested output prefix: 'chains/lcdm_paper_all'
+[0 : classy] `classy` module loaded successfully from /home/bonobo/.local/lib/python3.12/site-packages/classy
+[2 : bao.desi_dr2.desi_bao_all] Initialized.
+[4 : bao.desi_dr2.desi_bao_all] Initialized.
+[5 : bao.desi_dr2.desi_bao_all] Initialized.
+[0 : bao.desi_dr2.desi_bao_all] Initialized.
+[1 : bao.desi_dr2.desi_bao_all] Initialized.
+[3 : bao.desi_dr2.desi_bao_all] Initialized.
+[0 : polychord] `pypolychord` module loaded successfully from /home/bonobo/new/cobaya_packages/code/PolyChordLite/build/lib.linux-x86_64-cpython-312/pypolychord
+[0 : polychord] Storing raw PolyChord output in 'chains/lcdm_paper_all_polychord_raw'.
+[0 : polychord] Parameter blocks and their oversampling factors:
+[0 : polychord] *  1 : ['omega_b', 'omega_cdm', 'H0', 'logA', 'n_s', 'tau_reio']
+[0 : polychord] * 19 : ['A_planck']
+[0 : prior] *WARNING* There are unbounded parameters (['tau_reio', 'A_planck']). Prior bounds are given at 0.9999995 confidence level. Beware of likelihood modes at the edge of the prior
+[0 : polychord] Calling PolyChord...
+PolyChord: MPI is already initilised, not initialising, and will not finalize
+PolyChord: MPI is already initilised, not initialising, and will not finalize
+PolyChord: MPI is already initilised, not initialising, and will not finalize
+PolyChord: MPI is already initilised, not initialising, and will not finalize
+PolyChord: MPI is already initilised, not initialising, and will not finalize
+PolyChord: MPI is already initilised, not initialising, and will not finalize
+
+PolyChord: Next Generation Nested Sampling
+copyright: Will Handley, Mike Hobson & Anthony Lasenby
+  version: 1.20.1
+  release: 1st June 2021
+    email: wh260@mrao.cam.ac.uk
+
+Run Settings
+nlive    :     150
+nDims    :       7
+nDerived :      11
+Doing Clustering
+Synchronous parallelisation
+Generating equally weighted posteriors
+Generating weighted posteriors
+Clustering on posteriors
+Writing a resume file to chains/lcdm_paper_all_polychord_raw/lcdm_paper_all.resume
+
+generating live points
+
+
+all live points generated
+
+number of repeats:           30         570
+started sampling
+
+_________________
+lives      | 150 |
+phantoms   | 599 |
+posteriors |1355 |
+equals     |   1 |
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+ncluster   =       1 /       1
+ndead      =                1355
+nposterior =                1355
+nequals    =                   1
+nlike      =                1583                 810
+<nlike>    =           0.53           5.40   (           0.02           0.01 per slice )
+log(Z)     =        -5054.18 +/-  0.83
+log(Z_1)   =        -5054.18 +/-  0.83 (still evaluating)
+
+
+
